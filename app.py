@@ -37,4 +37,23 @@ def custom_ml_scoring(payload_scoring):
         "labels": ["personal", "camping"],
         "values": output_values
     }
+@app.route('/spaces/<space_id>/deployments/<deployment_id>/predictions', methods=['POST'])
+def wml_scoring(space_id, deployment_id):
+    if not request.json:
+        abort(400)
+
+    # Get number of records to score from request or default to 1
+    no_of_records_to_score = request.json.get('no_of_records_to_score', 1)
+
+    # Generate scoring payload
+    payload_scoring = get_scoring_payload(no_of_records_to_score)
+
+    # Perform custom ML scoring
+    scoring_response = custom_ml_scoring(payload_scoring)
+
+    return jsonify(scoring_response)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=3000, debug=True)
+
 
