@@ -1,0 +1,9 @@
+gunicorn
+flask
+numpy
+pandas
+requests
+joblib==0.11
+scipy
+ibm_watson_machine_learning
+python-dotenv
